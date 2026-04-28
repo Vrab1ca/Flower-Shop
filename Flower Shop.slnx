@@ -1,4 +1,6 @@
 <Solution>
+  <Project Path="Flower Shop.Tests/Flower Shop.Tests.csproj">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
   <Project Path="Flower Shop/Flower Shop.csproj" />
-  <Project Path="Flower Shop.Tests/Flower Shop.Tests.csproj" />
 </Solution>
