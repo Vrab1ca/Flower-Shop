@@ -1,4 +1,5 @@
-using Flower_Shop.Models;
+using FlowerShopOnlineOrderSystem.Models;
+using FlowerShopOnlineOrderSystem.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,17 @@ namespace Flower_Shop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IFlowerService _flowerService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IFlowerService flowerService)
         {
-            _logger = logger;
+            _flowerService = flowerService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var flowers = await _flowerService.GetCatalogAsync();
+            return View(flowers);
         }
 
         public IActionResult Privacy()
