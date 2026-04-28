@@ -1,0 +1,58 @@
+@model IReadOnlyCollection<FlowerViewModel>
+@{
+    ViewData["Title"] = "Inventory";
+}
+
+<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
+    <div>
+        <h1 class="h2 mb-1">Flower Inventory</h1>
+        <p class="text-muted mb-0">Current stock and catalog pricing.</p>
+    </div>
+    @if (User.IsInRole(RoleNames.Administrator) || User.IsInRole(RoleNames.Florist))
+    {
+        <a class="btn btn-primary" asp-action="Create">Add flower</a>
+    }
+</div>
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Flower</th>
+                <th scope="col">Price</th>
+                <th scope="col">Stock</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var flower in Model)
+        {
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center gap-3">
+                        @if (!string.IsNullOrWhiteSpace(flower.ImageUrl))
+                        {
+                            <img class="inventory-thumb" src="@flower.ImageUrl" alt="@flower.Name" />
+                        }
+                        <div>
+                            <div class="fw-semibold">@flower.Name</div>
+                            <div class="text-muted small">@flower.Description</div>
+                        </div>
+                    </div>
+                </td>
+                <td>@flower.Price.ToString("C")</td>
+                <td>@flower.AvailableQuantity</td>
+                <td class="text-end">
+                    @if (User.IsInRole(RoleNames.Administrator) || User.IsInRole(RoleNames.Florist))
+                    {
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Inventory actions">
+                            <a class="btn btn-outline-secondary" asp-action="Edit" asp-route-id="@flower.FlowerId">Edit</a>
+                            <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@flower.FlowerId">Delete</a>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

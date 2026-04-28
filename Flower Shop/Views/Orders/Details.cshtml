@@ -1,0 +1,63 @@
+@model OrderDetailsViewModel
+@{
+    ViewData["Title"] = $"Order #{Model.OrderId}";
+}
+
+<div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+    <div>
+        <h1 class="h2 mb-1">Order #@Model.OrderId</h1>
+        <p class="text-muted mb-0">@Model.CustomerName · @Model.CustomerEmail</p>
+    </div>
+    <span class="status-pill">@Model.Status</span>
+</div>
+
+<div class="form-panel mb-4">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="text-muted small">Placed</div>
+            <div>@Model.OrderDate.ToLocalTime().ToString("g")</div>
+        </div>
+        <div class="col-md-4">
+            <div class="text-muted small">Total</div>
+            <div class="fw-semibold">@Model.TotalPrice.ToString("C")</div>
+        </div>
+        @if (User.IsInRole(RoleNames.Administrator) || User.IsInRole(RoleNames.Florist))
+        {
+            <div class="col-md-4">
+                <form asp-action="UpdateStatus" asp-route-id="@Model.OrderId" method="post" class="d-flex gap-2">
+                    <select name="status" class="form-select">
+                        @foreach (var status in Enum.GetValues<OrderStatus>())
+                        {
+                            <option value="@status" selected="@(status == Model.Status)">@status</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn btn-outline-primary">Update</button>
+                </form>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th scope="col">Flower</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col" class="text-end">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.FlowerName</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@item.Quantity</td>
+                <td class="text-end">@item.Subtotal.ToString("C")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
