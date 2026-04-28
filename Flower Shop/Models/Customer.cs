@@ -16,6 +16,7 @@ namespace FlowerShopOnlineOrderSystem.Models
 
         [Required]
         [EmailAddress]
+        [StringLength(254)]
         public string Email { get; set; } = string.Empty;
 
         public ICollection<Order> Orders { get; set; } = new List<Order>();

@@ -22,6 +22,9 @@ namespace FlowerShopOnlineOrderSystem.Models
         [Range(0, int.MaxValue)]
         public int AvailableQuantity { get; set; }
 
+        [StringLength(500)]
+        public string? ImageUrl { get; set; }
+
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }
