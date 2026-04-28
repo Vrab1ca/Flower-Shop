@@ -19,9 +19,5 @@ namespace FlowerShopOnlineOrderSystem.ViewModels
 
         [Range(0, int.MaxValue)]
         public int AvailableQuantity { get; set; }
-
-        [StringLength(500)]
-        [Display(Name = "Image URL")]
-        public string? ImageUrl { get; set; }
     }
 }

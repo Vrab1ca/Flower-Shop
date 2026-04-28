@@ -1,37 +1,8 @@
-@model IReadOnlyCollection<FlowerViewModel>
-@{
-    ViewData["Title"] = "Catalog";
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
 
-<div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3 mb-4">
-    <div>
-        <h1 class="h2 mb-1">Fresh Flower Catalog</h1>
-        <p class="text-muted mb-0">Browse current arrangements and place an order for delivery.</p>
-    </div>
-    <a class="btn btn-primary" asp-controller="Orders" asp-action="Create">Start an order</a>
-</div>
-
-<div class="row g-4">
-    @foreach (var flower in Model)
-    {
-        <div class="col-12 col-md-6 col-xl-4">
-            <article class="catalog-card h-100">
-                @if (!string.IsNullOrWhiteSpace(flower.ImageUrl))
-                {
-                    <img class="catalog-image" src="@flower.ImageUrl" alt="@flower.Name" />
-                }
-                <div class="catalog-card-body">
-                    <div class="d-flex justify-content-between gap-3">
-                        <h2 class="h5 mb-1">@flower.Name</h2>
-                        <span class="fw-semibold text-nowrap">@flower.Price.ToString("C")</span>
-                    </div>
-                    <p class="text-muted small mb-3">@flower.Description</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="badge text-bg-light">@flower.AvailableQuantity in stock</span>
-                        <a class="btn btn-outline-primary btn-sm" asp-controller="Orders" asp-action="Create">Order</a>
-                    </div>
-                </div>
-            </article>
-        </div>
-    }
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

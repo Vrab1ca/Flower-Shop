@@ -361,12 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-# Local runtime artifacts for this project
-.dotnet/
-.nuget/
-**/App_Data/DataProtectionKeys/
-**/*.db
-**/*.db-shm
-**/*.db-wal
-flower-shop*.log
