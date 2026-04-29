@@ -26,6 +26,7 @@ namespace Flower_Shop.Controllers
         public async Task<IActionResult> Create()
         {
             var model = await _orderService.BuildCreateModelAsync();
+            ApplyCustomerDefaults(model);
             return View(model);
         }
 
@@ -46,7 +47,7 @@ namespace Flower_Shop.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                TempData["ErrorMessage"] = ex.Message;
                 return View(await _orderService.BuildCreateModelAsync(model));
             }
         }
@@ -71,6 +72,14 @@ namespace Flower_Shop.Controllers
 
             TempData["SuccessMessage"] = "Order status updated and notification queued.";
             return RedirectToAction(nameof(Details), new { id });
+        }
+
+        private void ApplyCustomerDefaults(OrderCreateViewModel model)
+        {
+            if (User.Identity?.IsAuthenticated == true && string.IsNullOrWhiteSpace(model.CustomerEmail))
+            {
+                model.CustomerEmail = User.Identity.Name ?? string.Empty;
+            }
         }
     }
 }
