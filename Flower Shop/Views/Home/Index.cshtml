@@ -1,37 +1,73 @@
 @model IReadOnlyCollection<FlowerViewModel>
 @{
     ViewData["Title"] = "Catalog";
+
+    var totalStock = Model.Sum(f => f.AvailableQuantity);
+    var startingPrice = Model.Count > 0 ? Model.Min(f => f.Price) : 0;
+    var heroImage = Model.FirstOrDefault(f => !string.IsNullOrWhiteSpace(f.ImageUrl))?.ImageUrl
+        ?? "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=1600&q=80";
 }
 
-<div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-3 mb-4">
-    <div>
-        <h1 class="h2 mb-1">Fresh Flower Catalog</h1>
-        <p class="text-muted mb-0">Browse current arrangements and place an order for delivery.</p>
+<section class="shop-hero" style="--hero-image: url('@heroImage')">
+    <div class="container">
+        <div class="shop-hero-content">
+            <span class="eyebrow">Same-day floral ordering</span>
+            <h1>Fresh arrangements, ready for delivery.</h1>
+            <p>Choose a bouquet, add quantities, and place a customer order in a few clean steps.</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary btn-lg" asp-controller="Orders" asp-action="Create">Start an order</a>
+                <a class="btn btn-light btn-lg" href="#catalog">View catalog</a>
+            </div>
+        </div>
     </div>
-    <a class="btn btn-primary" asp-controller="Orders" asp-action="Create">Start an order</a>
-</div>
+</section>
 
-<div class="row g-4">
-    @foreach (var flower in Model)
-    {
-        <div class="col-12 col-md-6 col-xl-4">
-            <article class="catalog-card h-100">
+<section class="container section-stack" id="catalog">
+    <div class="metric-row">
+        <div class="metric-card">
+            <span class="metric-label">Arrangements</span>
+            <strong>@Model.Count</strong>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">In stock</span>
+            <strong>@totalStock</strong>
+        </div>
+        <div class="metric-card">
+            <span class="metric-label">Starting at</span>
+            <strong>@startingPrice.ToString("C")</strong>
+        </div>
+    </div>
+
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">Catalog</span>
+            <h2>Available flowers</h2>
+        </div>
+        <a class="btn btn-outline-primary" asp-controller="Orders" asp-action="Create">Create order</a>
+    </div>
+
+    <div class="catalog-grid">
+        @foreach (var flower in Model)
+        {
+            <article class="product-card">
                 @if (!string.IsNullOrWhiteSpace(flower.ImageUrl))
                 {
-                    <img class="catalog-image" src="@flower.ImageUrl" alt="@flower.Name" />
+                    <img class="product-image" src="@flower.ImageUrl" alt="@flower.Name" />
                 }
-                <div class="catalog-card-body">
-                    <div class="d-flex justify-content-between gap-3">
-                        <h2 class="h5 mb-1">@flower.Name</h2>
-                        <span class="fw-semibold text-nowrap">@flower.Price.ToString("C")</span>
+                <div class="product-body">
+                    <div class="product-title-row">
+                        <h3>@flower.Name</h3>
+                        <span>@flower.Price.ToString("C")</span>
                     </div>
-                    <p class="text-muted small mb-3">@flower.Description</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="badge text-bg-light">@flower.AvailableQuantity in stock</span>
+                    <p>@flower.Description</p>
+                    <div class="product-footer">
+                        <span class="stock-pill @(flower.AvailableQuantity <= 5 ? "stock-low" : null)">
+                            @flower.AvailableQuantity available
+                        </span>
                         <a class="btn btn-outline-primary btn-sm" asp-controller="Orders" asp-action="Create">Order</a>
                     </div>
                 </div>
             </article>
-        </div>
-    }
-</div>
+        }
+    </div>
+</section>
