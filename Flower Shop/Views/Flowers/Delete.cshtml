@@ -3,12 +3,29 @@
     ViewData["Title"] = "Delete Flower";
 }
 
-<h1 class="h2 mb-3">Delete Flower</h1>
-<div class="form-panel">
-    <p class="mb-1">Delete <strong>@Model.Name</strong> from inventory?</p>
-    <p class="text-muted">This cannot be completed if existing orders still reference the flower.</p>
-    <form asp-action="Delete" asp-route-id="@Model.FlowerId" method="post" class="d-flex gap-2">
-        <button type="submit" class="btn btn-danger">Delete</button>
-        <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
-    </form>
-</div>
+<section class="container page-heading">
+    <div>
+        <span class="eyebrow">Inventory</span>
+        <h1>Delete flower</h1>
+        <p>Confirm removal from the active catalog.</p>
+    </div>
+</section>
+
+<section class="container">
+    <div class="form-panel">
+        <div class="d-flex align-items-center gap-3 mb-4">
+            @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+            {
+                <img class="inventory-thumb" src="@Model.ImageUrl" alt="@Model.Name" />
+            }
+            <div>
+                <h2 class="h5 mb-1">@Model.Name</h2>
+                <p class="text-muted mb-0">@Model.Description</p>
+            </div>
+        </div>
+        <form asp-action="Delete" asp-route-id="@Model.FlowerId" method="post" class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger btn-lg">Delete flower</button>
+            <a class="btn btn-outline-secondary btn-lg" asp-action="Index">Cancel</a>
+        </form>
+    </div>
+</section>

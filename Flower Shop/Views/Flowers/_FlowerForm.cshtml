@@ -5,27 +5,27 @@
 <div class="row g-3">
     <div class="col-md-6">
         <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control form-control-lg" placeholder="Rose Celebration Bouquet" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="col-md-3">
         <label asp-for="Price" class="form-label"></label>
-        <input asp-for="Price" class="form-control" />
+        <input asp-for="Price" class="form-control form-control-lg" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
     <div class="col-md-3">
         <label asp-for="AvailableQuantity" class="form-label"></label>
-        <input asp-for="AvailableQuantity" class="form-control" />
+        <input asp-for="AvailableQuantity" class="form-control form-control-lg" />
         <span asp-validation-for="AvailableQuantity" class="text-danger"></span>
     </div>
     <div class="col-12">
         <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe the arrangement, occasion, or flower mix."></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="col-12">
         <label asp-for="ImageUrl" class="form-label"></label>
-        <input asp-for="ImageUrl" class="form-control" />
+        <input asp-for="ImageUrl" class="form-control form-control-lg" placeholder="https://images.unsplash.com/..." />
         <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
 </div>
