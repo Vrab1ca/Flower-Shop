@@ -87,14 +87,22 @@ namespace Flower_Shop.Controllers
         [Authorize(Roles = RoleNames.Staff)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var deleted = await _flowerService.DeleteAsync(id);
-
-            if (!deleted)
+            try
             {
-                return NotFound();
+                var deleted = await _flowerService.DeleteAsync(id);
+
+                if (!deleted)
+                {
+                    return NotFound();
+                }
+
+                TempData["SuccessMessage"] = "Flower removed from inventory.";
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
             }
 
-            TempData["SuccessMessage"] = "Flower removed from inventory.";
             return RedirectToAction(nameof(Index));
         }
     }
