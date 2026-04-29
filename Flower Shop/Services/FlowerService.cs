@@ -3,6 +3,7 @@ using FlowerShopOnlineOrderSystem.Models;
 using FlowerShopOnlineOrderSystem.Repositories.Interfaces;
 using FlowerShopOnlineOrderSystem.Services.Interfaces;
 using FlowerShopOnlineOrderSystem.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlowerShopOnlineOrderSystem.Services
 {
@@ -61,7 +62,17 @@ namespace FlowerShopOnlineOrderSystem.Services
             }
 
             await _flowerRepository.DeleteAsync(id);
-            await _flowerRepository.SaveChangesAsync();
+            try
+            {
+                await _flowerRepository.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new InvalidOperationException(
+                    "This flower cannot be deleted because it is connected to an existing order. Set its stock to 0 instead.",
+                    ex);
+            }
+
             return true;
         }
     }
