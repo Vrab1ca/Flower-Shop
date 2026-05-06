@@ -15,6 +15,12 @@
     <div class="order-main">
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
+        <div class="progress-strip" aria-label="Order progress">
+            <span class="progress-step is-active">Customer</span>
+            <span class="progress-step is-active">Flowers</span>
+            <span class="progress-step">Confirm</span>
+        </div>
+
         <section class="form-panel">
             <div class="panel-heading">
                 <div>
@@ -53,6 +59,10 @@
             <div class="order-grid">
                 @for (var i = 0; i < Model.Items.Count; i++)
                 {
+                    var itemImage = string.IsNullOrWhiteSpace(Model.Items[i].ImageUrl)
+                        ? "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=900&q=80"
+                        : Model.Items[i].ImageUrl;
+
                     <article class="order-item" data-order-item data-price="@Model.Items[i].Price.ToString(System.Globalization.CultureInfo.InvariantCulture)">
                         <input type="hidden" asp-for="Items[i].FlowerId" />
                         <input type="hidden" asp-for="Items[i].FlowerName" />
@@ -60,10 +70,7 @@
                         <input type="hidden" asp-for="Items[i].Price" />
                         <input type="hidden" asp-for="Items[i].AvailableQuantity" />
                         <input type="hidden" asp-for="Items[i].ImageUrl" />
-                        @if (!string.IsNullOrWhiteSpace(Model.Items[i].ImageUrl))
-                        {
-                            <img class="order-item-image" src="@Model.Items[i].ImageUrl" alt="@Model.Items[i].FlowerName" />
-                        }
+                        <img class="order-item-image" src="@itemImage" alt="@Model.Items[i].FlowerName" />
                         <div class="order-item-body">
                             <div>
                                 <div class="product-title-row">
