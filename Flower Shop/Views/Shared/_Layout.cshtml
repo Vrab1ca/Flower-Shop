@@ -1,5 +1,6 @@
 @{
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? string.Empty;
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? string.Empty;
     var isStaff = User.IsInRole(RoleNames.Administrator) || User.IsInRole(RoleNames.Florist);
 }
 
@@ -32,7 +33,7 @@
                                asp-area="" asp-controller="Home" asp-action="Index">Catalog</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @(currentController == "Orders" && !isStaff ? "active" : null)"
+                            <a class="nav-link @(currentController == "Orders" && currentAction == "Create" ? "active" : null)"
                                asp-area="" asp-controller="Orders" asp-action="Create">Order</a>
                         </li>
                         <li class="nav-item">
@@ -42,7 +43,7 @@
                         @if (isStaff)
                         {
                             <li class="nav-item">
-                                <a class="nav-link @(currentController == "Orders" ? "active" : null)"
+                                <a class="nav-link @(currentController == "Orders" && currentAction != "Create" ? "active" : null)"
                                    asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
                             </li>
                         }
