@@ -1,0 +1,60 @@
+@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="auth-shell">
+    <div class="auth-visual">
+        <span class="eyebrow">Welcome back</span>
+        <h1>Sign in to manage orders and flowers.</h1>
+        <p>Customers can place orders. Florists and administrators can manage stock and order status.</p>
+        <div class="auth-highlights">
+            <span>Secure Identity login</span>
+            <span>Role-based dashboard</span>
+            <span>Fast order processing</span>
+        </div>
+    </div>
+
+    <div class="auth-panel">
+        <div class="auth-card">
+            <div class="auth-card-heading">
+                <span class="eyebrow">Account</span>
+                <h2>Login</h2>
+                <p>Use your email and password to continue.</p>
+            </div>
+
+            <form method="post" asp-route-returnUrl="@Model.ReturnUrl" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+                    <label asp-for="Input.Email"></label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" placeholder="Password" />
+                    <label asp-for="Input.Password"></label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <label class="form-check auth-check mb-4">
+                    <input asp-for="Input.RememberMe" class="form-check-input" />
+                    <span class="form-check-label">Keep me signed in</span>
+                </label>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">Login</button>
+            </form>
+
+            <div class="auth-switch">
+                <span>New customer?</span>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Create an account</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

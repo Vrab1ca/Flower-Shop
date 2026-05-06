@@ -1,0 +1,81 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<section class="auth-shell auth-shell-register">
+    <div class="auth-visual">
+        <span class="eyebrow">Customer account</span>
+        <h1>Create an account for easier flower orders.</h1>
+        <p>Registration creates a Customer-role account and saves the customer profile for future orders.</p>
+        <div class="auth-highlights">
+            <span>Customer role assigned</span>
+            <span>Profile saved</span>
+            <span>Ready to order</span>
+        </div>
+    </div>
+
+    <div class="auth-panel">
+        <div class="auth-card">
+            <div class="auth-card-heading">
+                <span class="eyebrow">Join Flower Shop</span>
+                <h2>Register</h2>
+                <p>Use a real email format and a password with at least 8 characters.</p>
+            </div>
+
+            <form method="post" asp-route-returnUrl="@Model.ReturnUrl" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.FirstName" class="form-control" autocomplete="given-name" placeholder="First name" />
+                            <label asp-for="Input.FirstName"></label>
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Input.LastName" class="form-control" autocomplete="family-name" placeholder="Last name" />
+                            <label asp-for="Input.LastName"></label>
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="name@example.com" />
+                            <label asp-for="Input.Email"></label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input asp-for="Input.Password" class="form-control" autocomplete="new-password" placeholder="Password" />
+                            <label asp-for="Input.Password"></label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" placeholder="Confirm password" />
+                            <label asp-for="Input.ConfirmPassword"></label>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Create account</button>
+            </form>
+
+            <div class="auth-switch">
+                <span>Already registered?</span>
+                <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login instead</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
